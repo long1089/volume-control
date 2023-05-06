@@ -12,7 +12,14 @@ $(function () {
     var setUnMuteButton = document.getElementById("setUnMuteButton");
 
     var showToast = function (msg) {
-        $("#liveToast").toast("show").find(".toast-body").text(msg)
+        //$("#liveToast").toast("show").find(".toast-body").text(msg)
+        Swal.fire({
+            position: 'bottom',
+            text: msg,
+            showConfirmButton: false,
+            timer: 1500,
+            timerProgressBar: true,
+        })
     }
 
     //Disable the send button until connection is established.

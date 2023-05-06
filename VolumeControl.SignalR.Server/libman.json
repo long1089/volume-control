@@ -25,12 +25,19 @@
       ]
     },
     {
-      "provider": "unpkg",
       "library": "jquery@3.6.4",
       "destination": "wwwroot/js/jquery/",
       "files": [
         "dist/jquery.js",
         "dist/jquery.min.js"
+      ]
+    },
+    {
+      "library": "sweetalert2@11.7.5",
+      "destination": "wwwroot/js/sweetalert2/",
+      "files": [
+        "dist/sweetalert2.all.js",
+        "dist/sweetalert2.all.min.js"
       ]
     }
   ]
