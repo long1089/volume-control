@@ -1,0 +1,37 @@
+{
+  "version": "1.0",
+  "defaultProvider": "unpkg",
+  "libraries": [
+    {
+      "library": "@microsoft/signalr@latest",
+      "destination": "wwwroot/js/signalr",
+      "files": [
+        "dist/browser/signalr.min.js",
+        "dist/browser/signalr.js"
+      ]
+    },
+    {
+      "library": "bootstrap@4.6.2",
+      "destination": "wwwroot/js/bootstrap/",
+      "files": [
+        "dist/css/bootstrap.css",
+        "dist/css/bootstrap.min.css",
+        "dist/js/bootstrap.bundle.js",
+        "dist/js/bootstrap.bundle.min.js",
+        "dist/css/bootstrap-reboot.min.css",
+        "dist/css/bootstrap-reboot.css",
+        "dist/css/bootstrap-grid.min.css",
+        "dist/css/bootstrap-grid.css"
+      ]
+    },
+    {
+      "provider": "unpkg",
+      "library": "jquery@3.6.4",
+      "destination": "wwwroot/js/jquery/",
+      "files": [
+        "dist/jquery.js",
+        "dist/jquery.min.js"
+      ]
+    }
+  ]
+}

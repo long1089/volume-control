@@ -12,6 +12,7 @@ using VolumeControl.Core.Input;
 using VolumeControl.Core.Interfaces;
 using VolumeControl.Helpers;
 using VolumeControl.Log;
+using VolumeControl.SignalR.Client;
 using VolumeControl.WPF;
 using VolumeControl.WPF.Collections;
 
@@ -38,6 +39,10 @@ namespace VolumeControl
 #if DEBUG
             //(FindResource("DebugWindow") as DebugWindow)!.Show();
 #endif
+            Client = new SignalRClient();
+            Client.SetDeviceVolume = (v) => this.AudioAPI.SetDeviceVolume(v);
+            Client.SetDeviceMute = (v) => this.AudioAPI.SetDeviceMute(v);
+            Client.CreateConnection(Settings.SocketHost);
         }
         #endregion Setup
 
@@ -66,6 +71,8 @@ namespace VolumeControl
             get => Settings.LogPath;
             set => Settings.LogPath = value;
         }
+
+        public SignalRClient Client { get; set; }
         #endregion Properties
 
         #region EventHandlers

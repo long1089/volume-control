@@ -255,6 +255,30 @@ namespace VolumeControl.Audio
         /// <param name="sCompareType">The string comparison type to use.</param>
         /// <returns><see cref="IDevice"/> if successful, or <see langword="null"/> if no matching devices were found.</returns>
         public IDevice? FindDeviceWithID(string deviceID, StringComparison sCompareType = StringComparison.Ordinal) => this.FindDevice(dev => dev.DeviceID.Equals(deviceID, sCompareType));
+
+        /// <summary>
+        /// Set volume of default device
+        /// </summary>
+        /// <param name="volume"></param>
+        public void SetDeviceVolume(int volume)
+        {
+            if (this.DefaultDevice != null)
+            {
+                this.DefaultDevice.Volume = volume;
+            }
+        }
+
+        /// <summary>
+        /// Set mute of default device
+        /// </summary>
+        /// <param name="muted"></param>
+        public void SetDeviceMute(bool muted)
+        {
+            if (this.DefaultDevice != null)
+            {
+                this.DefaultDevice.Muted = muted;
+            }
+        }
         #endregion Device
 
         #region ReloadSessions

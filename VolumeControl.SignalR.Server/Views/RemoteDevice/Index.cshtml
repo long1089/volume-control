@@ -1,0 +1,60 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@model VolumeControl.SignalR.Server.Models.RemoteDeviceModel
+@{
+    Layout = null;
+}
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <title>远程音量控制</title>
+    <link rel="stylesheet" href="~/js/bootstrap/dist/css/bootstrap.css" />
+    <script src="~/js/jquery/dist/jquery.js"></script>
+    <script src="~/js/bootstrap/dist/js/bootstrap.bundle.js"></script>
+</head>
+<body>
+    <div class="container-fluid">
+        <div class="card" style="margin-top:1rem;">
+            <div class="card-header">
+                音量控制
+            </div>
+            <div class="card-body">
+                <form>
+                    <div class="form-group">
+                        <label for="uid">设备编号</label>
+                        <input type="text" class="form-control" id="uid" name="uid" value="@(Model.Uid)" placeholder="UID" readonly>
+                    </div>
+                    <div class="form-group">
+                        <label for="volumeInput">音量大小&nbsp;</label>
+                        <span class="badge badge-primary" id="volume">20</span>
+                        <input type="range" class="form-control-range" id="volumeInput" name="volumeInput" min="0" max="100" value="20" placeholder="输入音量，值范围 1-100">
+                    </div>
+                </form>
+            </div>
+            <div class="card-footer">
+                <button type="button" class="btn btn-primary btn-sm" id="setVolumeButton">设置音量</button>
+                <button type="button" class="btn btn-primary btn-sm" id="setMuteButton">禁音</button>
+                <button type="button" class="btn btn-primary btn-sm" id="setUnMuteButton">取消禁音</button>
+            </div>
+        </div>
+    </div>
+    <div class="position-fixed p-3" style="z-index: 5; right: 0; bottom: 0;">
+        <div id="liveToast" class="toast hide" role="alert" aria-live="assertive" aria-atomic="true" data-delay="2000">
+            <div class="toast-header">
+                <strong class="mr-auto">提示</strong>
+                <button type="button" class="ml-2 mb-1 close" data-dismiss="toast" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="toast-body">
+                已连接
+            </div>
+        </div>
+    </div>
+    <script src="~/js/signalr/dist/browser/signalr.js"></script>
+    <script src="~/js/device.js?v=202305051556"></script>
+</body>
+</html>

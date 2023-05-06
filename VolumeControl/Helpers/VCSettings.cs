@@ -150,6 +150,14 @@ namespace VolumeControl.Helpers
         /// This is read-only since there wouldn't be a way for volume control to find the config again after restarting
         /// </summary>
         public string ConfigLocation => System.IO.Path.Combine(Environment.CurrentDirectory, Settings.Location);
+
+
+        /// <inheritdoc/>
+        public string SocketHost
+        {
+            get => Settings.SocketHost;
+            set => Settings.SocketHost = value;
+        }
         #endregion Properties
 
         #region Events

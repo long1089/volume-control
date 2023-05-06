@@ -1131,6 +1131,40 @@
                     <!--  Settings Tab Layout  -->
                     <Border BorderBrush="{StaticResource TabBackgroundBrush}" BorderThickness="2">
                         <VirtualizingStackPanel FlowDirection="LeftToRight" Orientation="Vertical">
+                            <!--  ▼ Socket ▼  -->
+                            <Border Style="{StaticResource SectionStyle}">
+                                <Grid x:Name="socketGrid">
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="Auto" />
+                                        <RowDefinition Height="*" />
+                                    </Grid.RowDefinitions>
+                                    <Label
+                                        HorizontalAlignment="Left"
+                                        Content="{Tr 'VolumeControl.MainWindow.Settings.SocketHost.Header',
+                                                     DefaultText='SocketHost'}"
+                                        FlowDirection="LeftToRight"
+                                        Style="{StaticResource HeaderLabelStyle}" />
+
+                                    <Grid Grid.Row="1" Margin="5,3">
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="*" />
+                                        </Grid.ColumnDefinitions>
+                                        <TextBox
+                                            x:Name="socketHost"
+                                            AutoWordSelection="True"
+                                            Background="#0000"
+                                            BorderThickness="0"
+                                            Foreground="{StaticResource TextBoxForeground}"
+                                            HorizontalScrollBarVisibility="Hidden"
+                                            IsInactiveSelectionHighlightEnabled="True"
+                                            MouseDoubleClick="Handle_TargetNameBoxDoubleClick"
+                                            Style="{StaticResource TextBoxStyle}"
+                                            Text="{Binding SocketHost, Source={StaticResource Settings}, UpdateSourceTrigger=LostFocus}" />
+                                    </Grid>
+                                </Grid>
+                            </Border>
+                            <!--  ▲ Socket ▲  -->
+                            
                             <!--  ▼ Language ▼  -->
                             <Border Style="{StaticResource SectionStyle}">
                                 <Grid x:Name="langGrid">

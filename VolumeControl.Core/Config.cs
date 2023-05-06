@@ -52,6 +52,8 @@ namespace VolumeControl.Core
         #endregion Statics
 
         #region Main
+        public string SocketHost { get; set; } = "https://localhost:5001/devices?CLH.client";
+
         /// <summary>
         /// Gets or sets the name of the current localization language.
         /// </summary>

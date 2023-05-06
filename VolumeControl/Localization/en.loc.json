@@ -146,6 +146,9 @@
         "TabHeader": {
           "English (US/CA)": "Settings"
         },
+        "SocketHost": {
+          "Header": "Socket Host"
+        },
         "Language": {
           "Header": {
             "English (US/CA)": "Language"
