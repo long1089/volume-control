@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.SignalR.Client;
 using System;
+using System.Data;
 using System.Net;
 
 namespace VolumeControl.SignalR.Client
@@ -7,7 +8,7 @@ namespace VolumeControl.SignalR.Client
     public class SignalRClient
     {
         private string uid = $"U{new Random().Next(1000000):0000000}.client";
-        private string url = string.Empty ;
+        private string url = string.Empty;
         private HubConnection? connection;
         private bool forceClose = false;
 
@@ -17,7 +18,14 @@ namespace VolumeControl.SignalR.Client
 
         public Action<bool>? SetDeviceMute { get; set; }
 
+        public Action<string> StatusChanged { get; set; }  
+
         public Action? Shutdown { get; set; }
+
+        private void UpdateStatus(HubConnectionState state)
+        {
+            StatusChanged?.Invoke(state.ToString());
+        }
 
 
         public void CreateConnection(string url)
@@ -26,13 +34,15 @@ namespace VolumeControl.SignalR.Client
             StartNewConnection();
         }
 
-        private async void StartNewConnection() {
+        private async void StartNewConnection()
+        {
             try
             {
-                if(forceClose)
+                if (forceClose)
                 {
                     return;
                 }
+                UpdateStatus(HubConnectionState.Disconnected);
                 Console.WriteLine("StartNewConnection");
                 connection = new HubConnectionBuilder()
                 .WithUrl(url)
@@ -46,11 +56,13 @@ namespace VolumeControl.SignalR.Client
                 connection.Reconnecting += async (error) =>
                 {
                     Console.WriteLine("reconnecting");
+                    UpdateStatus(HubConnectionState.Reconnecting);
                     await Task.CompletedTask;
                 };
                 connection.Reconnected += async (error) =>
                 {
                     Console.WriteLine("reconnected");
+                    UpdateStatus(HubConnectionState.Connected);
                     await Task.CompletedTask;
                 };
                 connection.Closed += async (error) =>
@@ -90,6 +102,8 @@ namespace VolumeControl.SignalR.Client
                 });
 
                 await connection.StartAsync();
+
+                UpdateStatus(HubConnectionState.Connected);
             }
             catch (Exception)
             {

@@ -1148,6 +1148,7 @@
                                     <Grid Grid.Row="1" Margin="5,3">
                                         <Grid.ColumnDefinitions>
                                             <ColumnDefinition Width="*" />
+                                            <ColumnDefinition Width="Auto" />
                                         </Grid.ColumnDefinitions>
                                         <TextBox
                                             x:Name="socketHost"
@@ -1160,6 +1161,12 @@
                                             MouseDoubleClick="Handle_TargetNameBoxDoubleClick"
                                             Style="{StaticResource TextBoxStyle}"
                                             Text="{Binding SocketHost, Source={StaticResource Settings}, UpdateSourceTrigger=LostFocus}" />
+                                        <Label
+                                            x:Name="lblSocketStatus"
+                                            Grid.Column="2"
+                                            Margin="3"
+                                            Content="{Binding Path=ClientStatus, UpdateSourceTrigger=PropertyChanged}"
+                                            Style="{StaticResource HeaderLabelStyle}" />
                                     </Grid>
                                 </Grid>
                             </Border>

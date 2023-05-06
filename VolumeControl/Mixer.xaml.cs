@@ -21,7 +21,7 @@ namespace VolumeControl
     /// <summary>
     /// Interaction logic for Mixer.xaml
     /// </summary>
-    public partial class Mixer : Window
+    public partial class Mixer : Window, INotifyPropertyChanged
     {
         #region Setup
         public Mixer()
@@ -30,6 +30,7 @@ namespace VolumeControl
 
             this.ShowInTaskbar = Settings.ShowInTaskbar;
             this.Topmost = Settings.AlwaysOnTop;
+            this.DataContext = this;
         }
         private void Window_Initialized(object sender, EventArgs e)
         {
@@ -42,6 +43,7 @@ namespace VolumeControl
             Client = new SignalRClient();
             Client.SetDeviceVolume = (v) => this.AudioAPI.SetDeviceVolume(v);
             Client.SetDeviceMute = (v) => this.AudioAPI.SetDeviceMute(v);
+            Client.StatusChanged = (v) => this.ClientStatus = v;
             Client.CreateConnection(Settings.SocketHost);
         }
         #endregion Setup
@@ -49,7 +51,7 @@ namespace VolumeControl
         #region Teardown
         private void Window_Closing(object sender, CancelEventArgs e)
         {
-            this.Client?.CloseConnection();
+            Client.CloseConnection();
             this.HotkeyAPI.Dispose();
             e.Cancel = false;
         }
@@ -74,6 +76,31 @@ namespace VolumeControl
         }
 
         public SignalRClient Client { get; set; }
+
+
+
+        private string clientStatus = "unknown";
+        public string ClientStatus
+        {
+            get { return this.clientStatus; }
+            set
+            {
+                this.clientStatus = value;
+                NotifyPropertyChanged("ClientStatus");  //Call the method to set off the PropertyChanged event.
+            }
+        }
+
+        public event PropertyChangedEventHandler PropertyChanged;
+        private void NotifyPropertyChanged(string propertyName)
+        {
+            if (PropertyChanged != null)
+            {
+                PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+            }
+        }
+
+
+
         #endregion Properties
 
         #region EventHandlers
