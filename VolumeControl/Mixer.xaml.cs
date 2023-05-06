@@ -49,6 +49,7 @@ namespace VolumeControl
         #region Teardown
         private void Window_Closing(object sender, CancelEventArgs e)
         {
+            this.Client?.CloseConnection();
             this.HotkeyAPI.Dispose();
             e.Cancel = false;
         }
