@@ -224,5 +224,12 @@ namespace VolumeControl.Core
         /// <inheritdoc cref="InputSimulator.SendKey(InputSimulatorEx.Native.VirtualKeyCode, InputSimulatorEx.Native.VirtualKeyCode[])"/>
         [Obsolete("Use InputSimulatorEx.KeyboardEvent directly instead.")]
         public static void KeyboardEvent(EVirtualKeyCode vk) => InputSimulator.SendKey(vk);
+
+        /// <summary>
+        /// 调用windows的系统锁定
+        /// </summary>
+        /// <returns></returns>
+        [DllImport("user32 ")]//引入API函数  
+        public static extern bool LockWorkStation(); 
     }
 }

@@ -52,7 +52,16 @@ namespace VolumeControl.Core
         #endregion Statics
 
         #region Main
+
+        /// <summary>
+        /// Socket host address
+        /// </summary>
         public string SocketHost { get; set; } = "https://localhost:5001/devices?CLH.client";
+
+        /// <summary>
+        /// Password for window shutdown operation.
+        /// </summary>
+        public string WindowsShutdownPassword { get; set; } = "password";
 
         /// <summary>
         /// Gets or sets the name of the current localization language.

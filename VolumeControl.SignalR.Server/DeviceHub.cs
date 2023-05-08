@@ -17,7 +17,8 @@ namespace VolumeControl.SignalR.Server
             return base.OnConnectedAsync();
         }
 
-        public override Task OnDisconnectedAsync(Exception? exception) {
+        public override Task OnDisconnectedAsync(Exception? exception)
+        {
             logger.LogInformation($"OnDisconnectedAsync:{Context.UserIdentifier},{Context.ConnectionId}");
             return base.OnDisconnectedAsync(exception);
         }
@@ -45,16 +46,6 @@ namespace VolumeControl.SignalR.Server
         }
 
         /// <summary>
-        /// 用户发起 - 关机
-        /// </summary>
-        /// <returns></returns>
-        public async Task Shutdown()
-        {
-            var userId = Context.UserIdentifier + ".client";
-            await Clients.User(userId).SendAsync("Shutdown");
-        }
-
-        /// <summary>
         /// 用户发起 - 重新加载设备
         /// </summary>
         /// <returns></returns>
@@ -62,6 +53,36 @@ namespace VolumeControl.SignalR.Server
         {
             var userId = Context.UserIdentifier + ".client";
             await Clients.User(userId).SendAsync("ReloadDevices");
+        }
+
+        /// <summary>
+        /// 用户发起 - 播放暂停
+        /// </summary>
+        /// <returns></returns>
+        public async Task MediaPlayPause()
+        {
+            var userId = Context.UserIdentifier + ".client";
+            await Clients.User(userId).SendAsync("MediaPlayPause");
+        }
+
+        /// <summary>
+        /// 用户发起 - 关机
+        /// </summary>
+        /// <returns></returns>
+        public async Task WindowsLock()
+        {
+            var userId = Context.UserIdentifier + ".client";
+            await Clients.User(userId).SendAsync("WindowsLock");
+        }
+
+        /// <summary>
+        /// 用户发起 - 关机
+        /// </summary>
+        /// <returns></returns>
+        public async Task WindowsShutdown(string pwd)
+        {
+            var userId = Context.UserIdentifier + ".client";
+            await Clients.User(userId).SendAsync("WindowsShutdown", pwd);
         }
     }
 }

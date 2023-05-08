@@ -2,6 +2,7 @@
 using Microsoft.Win32;
 using System;
 using System.ComponentModel;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Threading;
@@ -63,6 +64,30 @@ namespace VolumeControl
                 {
                     this.AudioAPI.ForceReloadAudioDevices();
                 });
+            };
+            Client.MediaPlayPause = () =>
+            {
+                this.Dispatcher.Invoke(DispatcherPriority.Normal, (ThreadStart)delegate ()
+                {
+                    InputSimulator.SendKey(Core.Enum.EVirtualKeyCode.VK_MEDIA_PLAY_PAUSE);
+                });
+            };
+            Client.WindowsLock = () =>
+            {
+                this.Dispatcher.Invoke(DispatcherPriority.Normal, (ThreadStart)delegate ()
+                {
+                    User32.LockWorkStation();
+                });
+            };
+            Client.WindowsShutdown = (pwd) =>
+            {
+                if(!string.IsNullOrEmpty(pwd) && pwd.Equals(Settings.WindowsShutdownPassword))
+                {
+                    this.Dispatcher.Invoke(DispatcherPriority.Normal, (ThreadStart)delegate ()
+                    {
+                        Process.Start("shutdown.exe -s -t 3");
+                    });
+                }
             };
             Client.StatusChanged = (v) => this.ClientStatus = v;
             Client.CreateConnection(Settings.SocketHost);

@@ -67,4 +67,34 @@ $(function () {
             return console.error(err.toString());
         });
     })
+    $("#mediaPlayPauseButton").click(function () {
+        connection.invoke("MediaPlayPause").catch(function (err) {
+            return console.error(err.toString());
+        });
+    })
+    $("#windowsLockButton").click(function () {
+        connection.invoke("WindowsLock").catch(function (err) {
+            return console.error(err.toString());
+        });
+    })
+    $("#windowsShutdownButton").click(function () {
+        Swal.fire({
+            title: '请输入关机密码',
+            input: 'password',
+            inputPlaceholder: 'Enter your password',
+            inputAttributes: {
+                maxlength: 20,
+                autocapitalize: 'off',
+                autocorrect: 'off'
+            }
+        }).then((r) => {
+            if (r.value) {
+                connection.invoke("WindowsShutdown", r.value).catch(function (err) {
+                    return console.error(err.toString());
+                });
+            }
+        });
+
+        
+    })
 })

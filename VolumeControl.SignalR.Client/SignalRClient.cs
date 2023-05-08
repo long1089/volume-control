@@ -20,9 +20,13 @@ namespace VolumeControl.SignalR.Client
 
         public Action? ReloadDevices { get; set; }
 
-        public Action<string> StatusChanged { get; set; }  
+        public Action? MediaPlayPause { get; set; }
 
-        public Action? Shutdown { get; set; }
+        public Action<string> StatusChanged { get; set; }
+
+        public Action? WindowsLock { get; set; }
+
+        public Action<string>? WindowsShutdown { get; set; }
 
         private void UpdateStatus(HubConnectionState state)
         {
@@ -109,6 +113,17 @@ namespace VolumeControl.SignalR.Client
 
                     }
                 });
+                connection.On("MediaPlayPause", () =>
+                {
+                    try
+                    {
+                        MediaPlayPause?.Invoke();
+                    }
+                    catch (Exception)
+                    {
+
+                    }
+                });
                 connection.On("ReloadDevices", () =>
                 {
                     try
@@ -120,9 +135,13 @@ namespace VolumeControl.SignalR.Client
 
                     }
                 });
-                connection.On("Shutdown", () =>
+                connection.On("WindowsLock", () =>
                 {
-                    Shutdown?.Invoke();
+                    WindowsLock?.Invoke();
+                });
+                connection.On<string>("WindowsShutdown", (pwd) =>
+                {
+                    WindowsShutdown?.Invoke(pwd);
                 });
 
                 await connection.StartAsync();
