@@ -18,6 +18,8 @@ namespace VolumeControl.SignalR.Client
 
         public Action<bool>? SetDeviceMute { get; set; }
 
+        public Action? ReloadDevices { get; set; }
+
         public Action<string> StatusChanged { get; set; }  
 
         public Action? Shutdown { get; set; }
@@ -90,6 +92,28 @@ namespace VolumeControl.SignalR.Client
                     try
                     {
                         SetDeviceMute?.Invoke(v);
+                    }
+                    catch (Exception)
+                    {
+
+                    }
+                });
+                connection.On("ReloadDevices", () =>
+                {
+                    try
+                    {
+                        ReloadDevices?.Invoke();
+                    }
+                    catch (Exception)
+                    {
+
+                    }
+                });
+                connection.On("ReloadDevices", () =>
+                {
+                    try
+                    {
+                        ReloadDevices?.Invoke();
                     }
                     catch (Exception)
                     {

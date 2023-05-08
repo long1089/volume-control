@@ -4,8 +4,10 @@ using System;
 using System.ComponentModel;
 using System.IO;
 using System.Linq;
+using System.Threading;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Threading;
 using VolumeControl.Audio;
 using VolumeControl.Core;
 using VolumeControl.Core.Input;
@@ -41,8 +43,27 @@ namespace VolumeControl
             //(FindResource("DebugWindow") as DebugWindow)!.Show();
 #endif
             Client = new SignalRClient();
-            Client.SetDeviceVolume = (v) => this.AudioAPI.SetDeviceVolume(v);
-            Client.SetDeviceMute = (v) => this.AudioAPI.SetDeviceMute(v);
+            Client.SetDeviceVolume = (v) =>
+            {
+                this.Dispatcher.Invoke(DispatcherPriority.Normal, (ThreadStart)delegate ()
+                {
+                    this.AudioAPI.SetDeviceVolume(v);
+                });
+            };
+            Client.SetDeviceMute = (v) =>
+            {
+                this.Dispatcher.Invoke(DispatcherPriority.Normal, (ThreadStart)delegate ()
+                {
+                    this.AudioAPI.SetDeviceMute(v);
+                });
+            };
+            Client.ReloadDevices = () =>
+            {
+                this.Dispatcher.Invoke(DispatcherPriority.Normal, (ThreadStart)delegate ()
+                {
+                    this.AudioAPI.ForceReloadAudioDevices();
+                });
+            };
             Client.StatusChanged = (v) => this.ClientStatus = v;
             Client.CreateConnection(Settings.SocketHost);
         }

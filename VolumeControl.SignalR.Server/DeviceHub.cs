@@ -53,5 +53,15 @@ namespace VolumeControl.SignalR.Server
             var userId = Context.UserIdentifier + ".client";
             await Clients.User(userId).SendAsync("Shutdown");
         }
+
+        /// <summary>
+        /// 用户发起 - 重新加载设备
+        /// </summary>
+        /// <returns></returns>
+        public async Task ReloadDevices()
+        {
+            var userId = Context.UserIdentifier + ".client";
+            await Clients.User(userId).SendAsync("ReloadDevices");
+        }
     }
 }

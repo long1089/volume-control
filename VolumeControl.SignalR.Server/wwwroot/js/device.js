@@ -61,4 +61,10 @@ $(function () {
         });
         event.preventDefault();
     });
+
+    $("#reloadDeviceButton").click(function () {
+        connection.invoke("ReloadDevices").catch(function (err) {
+            return console.error(err.toString());
+        });
+    })
 })
